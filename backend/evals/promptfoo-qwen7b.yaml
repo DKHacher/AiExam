@@ -1,0 +1,30 @@
+description: qwen 7b test
+
+options:
+  disableCache: true
+
+providers:
+  - id: http
+    config:
+      url: "http://localhost:8000"
+      method: POST
+      headers:
+        Content-Type: "application/json"
+      body:
+        input: "{{input}}"
+        model: "qwen2.5:7b"
+      transformResponse: "json.response"
+
+prompts:
+  - "{{input}}"
+
+commandLineOptions:
+  maxConcurrency: 1
+  repeat: 1
+  delay: 1000
+  cache: false
+
+
+tests: tests.yaml
+
+

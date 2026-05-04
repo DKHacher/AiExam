@@ -1,0 +1,15 @@
+- vars: #this test is only a template for different tests down the line, need to change the input, value and provider
+    input: "how many miles is 10 km"
+  assert:
+    - type: llm-rubric
+      provider: "ollama:chat:qwen3.5:4b"
+      value: |
+        The assistant is a unit conversion agent that should use tools.
+
+        A correct response must:
+        - correspond to the correct unit conversion
+        - return only the final result
+        - not include reasoning or explanation
+
+        If the conversion is not supported, the response must be:
+        "Unsupported conversion".
