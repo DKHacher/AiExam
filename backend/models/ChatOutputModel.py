@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
 
 
-class OutputModel(BaseModel):
+class ChatOutputModel(BaseModel):
     response : str = Field(..., description="The response from the LLM")
