@@ -1,20 +1,23 @@
 from sqlalchemy import Column
 from sqlalchemy import Integer
-from sqlalchemy import String
 from sqlalchemy import Float
 from sqlalchemy import DateTime
+from sqlalchemy import ForeignKey
 
 from datetime import datetime
 
 from database.database import Base
 
 
-class Card(Base):
-    __tablename__ = "cards"
+class CardPrice(Base):
+    __tablename__ = "card_prices"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
 
-    card_id = Column(Integer, unique=True, foreign_key="id")##not correct id, should target carddbmodel card_id
+    card_id = Column(
+        Integer,
+        ForeignKey("cards.card_id")
+    )
 
     price_trend = Column(Float)
 
