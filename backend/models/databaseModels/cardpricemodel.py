@@ -14,12 +14,15 @@ class Card(Base):
 
     id = Column(Integer, primary_key=True)
 
-    card_id = Column(Integer, unique=True)
+    card_id = Column(Integer, unique=True, foreign_key="id")##not correct id, should target carddbmodel card_id
 
-    name = Column(String)
+    price_trend = Column(Float)
 
-    set_name = Column(String)
+    price_low = Column(Float)
 
-    rarity = Column(String)
+    available_quantity = Column(Integer)
 
-    language = Column(String)
+    updated_at = Column(
+        DateTime,
+        default=datetime.utcnow
+    )
