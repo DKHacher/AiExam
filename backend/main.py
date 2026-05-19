@@ -1,4 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+
+from database.dependencies import get_db
+from services.card_service import (
+    get_all_cards,
+    get_card_by_id,
+    get_card_price_history
+)
 from fastapi.middleware.cors import CORSMiddleware
 
 from routes.chat_routes import router as chat_router
@@ -34,3 +42,25 @@ def health():
     return {
         "status": "healthy"
     }
+
+@app.get("/cards")
+def read_cards(db: Session = Depends(get_db)):
+    return get_all_cards(db)
+
+@app.get("/cards/{card_id}")
+def read_card(card_id: int, db: Session = Depends(get_db)):
+    return get_card_by_id(db, card_id)
+
+@app.get("/cards/{card_id}/history")
+def read_card_history(card_id: int, db: Session = Depends(get_db)):
+    return get_card_price_history(db, card_id)
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True
+    )
