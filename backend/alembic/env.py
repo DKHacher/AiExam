@@ -6,6 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 from database.database import Base
 from models.databaseModels.carddbmodel import Card
+from models.databaseModels.cardpricemodel import CardPrice
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

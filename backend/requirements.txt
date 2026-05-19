@@ -1,7 +1,13 @@
 fastapi
 pydantic
 uvicorn
+
 langchain
 langchain-core
 langchain-community
 langchain-ollama
+
+sqlalchemy
+alembic
+psycopg2-binary
+python-dotenv
