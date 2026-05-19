@@ -18,3 +18,17 @@ def get_card_price_history(db: Session, card_id: int):
         .order_by(CardPrice.updated_at.asc())
         .all()
     )
+
+def get_card_by_name(db: Session, card_name: str):
+    return (
+        db.query(Card)
+        .filter(Card.name == card_name)
+    )
+
+def get_latest_price_for_card(db: Session, card_id: int):
+    return (
+        db.query(CardPrice)
+        .filter(CardPrice.card_id == card_id)
+        .order_by(CardPrice.updated_at.desc())
+        .first()
+        )
