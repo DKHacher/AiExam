@@ -1,4 +1,8 @@
 from langchain_ollama import ChatOllama
+from langchain_classic import create_tool_calling_agent, AgentExecutor
+from langchain_core.prompts import ChatPromptTemplate
+
+from tools.card_tools import card_tools
 
 llm = ChatOllama(
     model="qwen2.5:7b",
@@ -6,21 +10,41 @@ llm = ChatOllama(
 )
 
 SYSTEM_PROMPT = """
-You are an AI assistant specialized in trading card analysis.
+You are an AI trading card market analyst.
+
+If the user asks about:
+- card prices
+- trends
+- history
+You MUST call tools before answering.
+Never answer from memory.
 """
 
-def ask_llm(user_message: str, card_data: str):
+prompt = ChatPromptTemplate.from_messages([
+    ("system", SYSTEM_PROMPT),
+    ("human", "{input}"),
+    ("placeholder", "{agent_scratchpad}")
+])
 
-    prompt = f"""
-    {SYSTEM_PROMPT}
+agent = create_tool_calling_agent(
+    llm=llm,
+    tools=card_tools,
+    prompt=prompt
+)
 
-    Card data:
-    {card_data}
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=card_tools,
+    verbose=True
+)
 
-    User question:
-    {user_message}
-    """
 
-    response = llm.invoke(prompt)
+def ask_llm(user_message: str):
+    try:
+        response = agent_executor.invoke({
+            "input": user_message
+        })
+        return response["output"]
 
-    return response.content
+    except Exception as e:
+        return f"LLM error: {str(e)}"
