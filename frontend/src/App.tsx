@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [result, setResult] = useState(
+        "AI responses will appear here..."
+    )
+    const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
+    
+async function sendMessage() {
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        if (!message.trim()) return
+
+        setLoading(true)
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:8000/chat",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }
+            )
+
+            const data = await response.json()
+
+            setResult(data.response)
+
+        } catch (error) {
+
+            setResult("Error connecting to backend.")
+
+        }
+
+        setLoading(false)
+    }
+
+     return (
+        <div className="App">
+
+            <header className="Header">
+                <h1>AI TCG Prediction Tool</h1>
+            </header>
+
+            <main className="ResultBox">
+                <div className="Result">
+
+                    {loading
+                        ? "Loading..."
+                        : result}
+
+                </div>
+            </main>
+
+            <footer className="Functions">
+
+                <input
+                    type="text"
+                    placeholder="Ask about a card..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
+
+                <button onClick={sendMessage}>
+                    Send
+                </button>
+
+            </footer>
+
+        </div>
+    )
 }
+
 
 export default App
