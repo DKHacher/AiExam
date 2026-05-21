@@ -1,15 +1,57 @@
-- vars: #this test is only a template for different tests down the line, need to change the input, value and provider
-    input: "how many miles is 10 km"
+- vars:
+    input: "What is the latest price for Manamorphose?"
   assert:
     - type: llm-rubric
       provider: "ollama:chat:qwen3.5:4b"
       value: |
-        The assistant is a unit conversion agent that should use tools.
+        The assistant should:
+        - identify the latest price from the database
+        - mention the latest known price
+        - not hallucinate fake values
+        - give a concise market analysis
 
-        A correct response must:
-        - correspond to the correct unit conversion
-        - return only the final result
-        - not include reasoning or explanation
+- vars:
+    input: "Show the price history for Manamorphose"
+  assert:
+    - type: llm-rubric
+      provider: "ollama:chat:qwen3.5:4b"
+      value: |
+        The assistant should:
+        - summarize historical price points
+        - mention that prices fluctuated
+        - avoid inventing extra dates
+        - use database-derived information only
 
-        If the conversion is not supported, the response must be:
-        "Unsupported conversion".
+- vars:
+    input: "Is Manamorphose rising or falling in price?"
+  assert:
+    - type: llm-rubric
+      provider: "ollama:chat:qwen3.5:4b"
+      value: |
+        The assistant should:
+        - analyze the trend direction
+        - classify the card as rising, falling, or stable
+        - explain briefly using the available price history
+        - avoid hallucinated market causes
+
+- vars:
+    input: "Give me the trend analysis for Black Lotus"
+  assert:
+    - type: llm-rubric
+      provider: "ollama:chat:qwen3.5:4b"
+      value: |
+        If the card does not exist in the database:
+        - the assistant should clearly state that the card was not found
+        - the assistant should not invent database entries
+        - the assistant should not hallucinate price history
+
+- vars:
+    input: "What cards are available in the database?"
+  assert:
+    - type: llm-rubric
+      provider: "ollama:chat:qwen3.5:4b"
+      value: |
+        The assistant should:
+        - retrieve cards using tools
+        - list cards from the database
+        - avoid hallucinating nonexistent cards

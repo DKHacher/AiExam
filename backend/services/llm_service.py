@@ -6,12 +6,6 @@ from langchain_classic.agents import (
 from langchain_core.prompts import ChatPromptTemplate
 
 from tools.card_tools import card_tools
-
-llm = ChatOllama(
-    model="qwen2.5:7b",
-    temperature=0.2
-)
-
 SYSTEM_PROMPT = """
 You are an AI trading card market analyst.
 
@@ -29,24 +23,30 @@ prompt = ChatPromptTemplate.from_messages([
     ("placeholder", "{agent_scratchpad}")
 ])
 
-agent = create_tool_calling_agent(
-    llm=llm,
-    tools=card_tools,
-    prompt=prompt
-)
+def ask_llm(user_message: str, model_name: str):
 
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=card_tools,
-    verbose=True
-)
+    llm = ChatOllama(
+        model=model_name,
+        temperature=0.2
+    )
 
+    agent = create_tool_calling_agent(
+        llm=llm,
+        tools=card_tools,
+        prompt=prompt
+    )
 
-def ask_llm(user_message: str):
+    agent_executor = AgentExecutor(
+        agent=agent,
+        tools=card_tools,
+        verbose=True
+    )
+
     try:
         response = agent_executor.invoke({
             "input": user_message
         })
+
         return response["output"]
 
     except Exception as e:
