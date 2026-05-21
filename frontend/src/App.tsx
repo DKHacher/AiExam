@@ -23,7 +23,8 @@ async function sendMessage() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        message: message
+                        message: message,
+                        model: "qwen2.5:7b"
                     })
                 }
             )

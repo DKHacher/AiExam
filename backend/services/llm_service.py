@@ -1,5 +1,8 @@
 from langchain_ollama import ChatOllama
-from langchain_classic import create_tool_calling_agent, AgentExecutor
+from langchain_classic.agents import (
+    create_tool_calling_agent,
+    AgentExecutor
+)
 from langchain_core.prompts import ChatPromptTemplate
 
 from tools.card_tools import card_tools
