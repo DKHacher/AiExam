@@ -2,7 +2,7 @@
     input: "What is the latest price for Manamorphose?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:qwen3.5:4b"
+      provider: "ollama:chat:gemma4:31b-cloud"
       value: |
         The assistant should:
         - identify the latest price from the database
@@ -14,7 +14,7 @@
     input: "Show the price history for Manamorphose"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:qwen3.5:4b"
+      provider: "ollama:chat:gemma4:31b-cloud"
       value: |
         The assistant should:
         - summarize historical price points
@@ -26,7 +26,7 @@
     input: "Is Manamorphose rising or falling in price?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:qwen3.5:4b"
+      provider: "ollama:chat:gemma4:31b-cloud"
       value: |
         The assistant should:
         - analyze the trend direction
@@ -38,7 +38,7 @@
     input: "Give me the trend analysis for Black Lotus"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:qwen3.5:4b"
+      provider: "ollama:chat:gemma4:31b-cloud"
       value: |
         If the card does not exist in the database:
         - the assistant should clearly state that the card was not found
@@ -49,7 +49,7 @@
     input: "What cards are available in the database?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:qwen3.5:4b"
+      provider: "ollama:chat:gemma4:31b-cloud"
       value: |
         The assistant should:
         - retrieve cards using tools

@@ -1,4 +1,4 @@
-description: qwen 3b test
+description: qwen 7b test
 
 options:
   disableCache: true
@@ -12,7 +12,7 @@ providers:
         Content-Type: "application/json"
       body:
         input: "{{input}}"
-        model: "qwen2.5:3b"
+        model: "phi3:latest"
       transformResponse: "json.response"
 
 prompts:
