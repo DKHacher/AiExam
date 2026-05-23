@@ -1,4 +1,4 @@
-description: qwen 3b test
+description: qwen 3.5 4b test
 
 options:
   disableCache: true
@@ -6,12 +6,12 @@ options:
 providers:
   - id: http
     config:
-      url: "http://localhost:8000"
+      url: "http://localhost:8000/chat"
       method: POST
       headers:
         Content-Type: "application/json"
       body:
-        input: "{{input}}"
+        message: "{{input}}"
         model: "qwen3.5:4b"
       transformResponse: "json.response"
 

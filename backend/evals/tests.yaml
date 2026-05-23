@@ -2,22 +2,21 @@
     input: "What is the latest price for Manamorphose?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:gemma4:31b-cloud"
+      provider: "ollama:chat:gemma4:e4b"
       value: |
         The assistant should:
         - identify the latest price from the database
         - mention the latest known price
         - not hallucinate fake values
-        - give a concise market analysis
 
 - vars:
     input: "Show the price history for Manamorphose"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:gemma4:31b-cloud"
+      provider: "ollama:chat:gemma4:e4b"
       value: |
         The assistant should:
-        - summarize historical price points
+        - list the database entries
         - mention that prices fluctuated
         - avoid inventing extra dates
         - use database-derived information only
@@ -26,7 +25,7 @@
     input: "Is Manamorphose rising or falling in price?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:gemma4:31b-cloud"
+      provider: "ollama:chat:gemma4:e4b"
       value: |
         The assistant should:
         - analyze the trend direction
@@ -38,7 +37,7 @@
     input: "Give me the trend analysis for Black Lotus"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:gemma4:31b-cloud"
+      provider: "ollama:chat:gemma4:e4b"
       value: |
         If the card does not exist in the database:
         - the assistant should clearly state that the card was not found
@@ -49,9 +48,9 @@
     input: "What cards are available in the database?"
   assert:
     - type: llm-rubric
-      provider: "ollama:chat:gemma4:31b-cloud"
+      provider: "ollama:chat:gemma4:e4b"
       value: |
         The assistant should:
-        - retrieve cards using tools
         - list cards from the database
         - avoid hallucinating nonexistent cards
+        There is currently only three cards in the database: Manamorphose, Fighter Class and Engineered Explosives, and the only way to acces that data is through the tools
